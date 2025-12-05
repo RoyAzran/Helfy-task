@@ -131,6 +131,37 @@ docker-compose down
 docker-compose down -v --remove-orphans
 ```
 
+## Logging
+
+The application uses **log4js** for structured JSON logging as required.
+
+### API Logging (server.js)
+Logs user authentication events in JSON format:
+```json
+{
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "userId": 1,
+  "action": "LOGIN_SUCCESS",
+  "ipAddress": "::ffff:172.18.0.1"
+}
+```
+
+### Consumer Logging (index.js)
+Logs CDC events and user activity from Kafka:
+```json
+{
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "source": "TiDB-CDC",
+  "topic": "tidb-cdc-events",
+  "partition": 0,
+  "offset": "5",
+  "operation": "DML",
+  "database": "test",
+  "table": "users",
+  "data": {...}
+}
+```
+
 ## Environment Variables
 
 | Variable | Default | Description |
